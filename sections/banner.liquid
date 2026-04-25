@@ -298,6 +298,7 @@
     </div>
   </div>
 
+  {% unless template.name == 'cart' %}
   <section class="gift-banner" id="gift-banner-{{ section.id }}">
     <div class="gift-banner__illustrations" aria-hidden="true">
       <img src="{{ 'icon.svg' | asset_url }}" alt="Background Illustrations" width="686" height="264">
@@ -324,6 +325,7 @@
       SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR
     </div>
   </section>
+  {% endunless %}
 </div>
 
 {% schema %}
