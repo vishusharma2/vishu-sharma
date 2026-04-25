@@ -1,0 +1,450 @@
+<style>
+  .gift-banner-wrapper {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .gift-banner {
+    position: relative;
+    width: 100%;
+    min-height: 92vh;
+    background: {{ section.settings.bg_color }};
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* ── Illustration background ── */
+  .gift-banner__illustrations {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.9;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  
+  .gift-banner__illustrations img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: top;
+  }
+
+  /* ── Top bar ── */
+  .gift-banner__topbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 36px;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: {{ section.settings.topbar_bg }};
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .gift-banner__logo {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: {{ section.settings.text_color }};
+    white-space: nowrap;
+  }
+
+  .gift-banner__topbar-center {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: {{ section.settings.text_color }};
+    opacity: 0.8;
+  }
+
+  .gift-banner__topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .gift-banner__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid {{ section.settings.bg_color }};
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+  }
+
+  .gift-banner__avatar:first-child { margin-left: 0; }
+  .gift-banner__avatar--1 { background: #8e8e8e; z-index: 3; }
+  .gift-banner__avatar--2 { background: #5a4b41; z-index: 2; }
+  .gift-banner__avatar--img {
+    overflow: hidden;
+    background: #ddd;
+    z-index: 1;
+  }
+  .gift-banner__avatar--img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+
+  .gift-banner__topbar-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: {{ section.settings.cta_bg }};
+    color: {{ section.settings.cta_color }};
+    padding: 10px 22px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .gift-banner__topbar-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
+
+  .gift-banner__topbar-cta svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* ── Hero content ── */
+  .gift-banner__content {
+    position: relative;
+    z-index: 2;
+    padding: 30px 40px 50px;
+    max-width: 580px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    margin: 20px 0 20px 20px;
+  }
+
+  .gift-banner__heading {
+    font-size: clamp(4rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.08;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .gift-banner__description {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    opacity: 0.9;
+    margin: 0 0 32px;
+    max-width: 500px;
+  }
+
+  .gift-banner__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_color }};
+    padding: 16px 36px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .gift-banner__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  }
+
+  .gift-banner__btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* ── Bottom strip ── */
+  .shop-subset {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    background: #f5f5f5;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 749px) {
+    .gift-banner__topbar {
+      display: none;
+    }
+
+    .gift-banner {
+      min-height: auto;
+      padding-top: 50px;
+      padding-bottom: 0;
+      justify-content: flex-start;
+    }
+
+    .gift-banner__content {
+      display: contents;
+    }
+
+    .gift-banner__heading {
+      order: 1;
+      text-align: center;
+      font-size: 2.2rem;
+      margin: 0 auto 15px;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .gift-banner__description {
+      order: 2;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 auto 30px;
+      width: 100%;
+      padding: 0 30px;
+    }
+
+    .gift-banner__illustrations {
+      order: 3;
+      position: relative;
+      height: 350px;
+      width: 100%;
+      margin-bottom: 0;
+      opacity: 1;
+    }
+
+    .gift-banner__illustrations img {
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .gift-banner__btn {
+      order: 4;
+      margin: -275px auto 42px;
+      z-index: 10;
+      position: relative;
+      width: fit-content;
+      padding: 14px 30px;
+      font-size: 0.95rem;
+    }
+
+    .shop-subset {
+      order: 5;
+      font-size: 0.75rem;
+      padding: 12px 10px;
+    }
+  }
+</style>
+
+<div class="gift-banner-wrapper">
+  <div class="gift-banner__topbar">
+    <div class="gift-banner__logo">
+      {{ section.settings.logo_text }}
+    </div>
+
+    <div class="gift-banner__topbar-center">
+      <span>{{ section.settings.top_text }}</span>
+    </div>
+
+    <div class="gift-banner__topbar-right">
+      {% if section.settings.top_button_text != blank %}
+      <a href="{{ section.settings.top_button_link }}" class="gift-banner__topbar-cta">
+        {{ section.settings.top_button_text }}
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <section class="gift-banner" id="gift-banner-{{ section.id }}">
+    <div class="gift-banner__illustrations" aria-hidden="true">
+      <img src="{{ 'icon.svg' | asset_url }}" alt="Background Illustrations" width="686" height="264">
+    </div>
+
+    <div class="gift-banner__content">
+      {% if section.settings.headline != blank %}
+        <h1 class="gift-banner__heading">{{ section.settings.headline }}</h1>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="gift-banner__description">{{ section.settings.description }}</div>
+      {% endif %}
+
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_link }}" class="gift-banner__btn">
+          {{ section.settings.button_text }}
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      {% endif %}
+    </div>
+    
+    <div class="shop-subset">
+      SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Gift Banner",
+  "class": "gift-banner-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Top bar"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "top_text",
+      "label": "Top bar message",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "top_button_text",
+      "label": "Top bar button text",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "url",
+      "id": "top_button_link",
+      "label": "Top bar button link"
+    },
+    {
+      "type": "header",
+      "content": "Hero content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "The Gift Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "topbar_bg",
+      "label": "Top bar background",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "illustration_color",
+      "label": "Illustration line color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg",
+      "label": "Top CTA background",
+      "default": "#f5d547"
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "Top CTA text color",
+      "default": "#1a1a1a"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Banner"
+    }
+  ]
+}
+{% endschema %}
